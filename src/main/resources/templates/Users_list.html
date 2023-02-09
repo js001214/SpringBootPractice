@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>UsersTable 출력</h1>
+<hr>
+<table>
+		<tr>
+			<th> 순서 </th>
+			<th> 씨엔티 </th>
+			<th> email </th>
+			<th> name </th>
+			<th> pass </th>
+			<th> 히히 </th>
+		</tr>
+		
+		<tr th:each="users : ${usersList}"> 
+			<td> [[${users.idx}]] </td>
+			<td> [[${users.cnt}]] </td>
+			<td> [[${users.email}]] </td>
+			<td> [[${users.name}]] </td>	
+			<td> [[${users.pass}]] </td>
+			<td> [[${users.regdate}]] </td>			
+		</tr>
+
+</table>
+</body>
+</html>
