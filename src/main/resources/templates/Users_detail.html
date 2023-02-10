@@ -7,6 +7,8 @@
 <body>
 <h1>UsersTable 출력</h1>
 <hr>
+
+
 <table>
 		<tr>
 			<th> 순서 </th>
@@ -17,15 +19,33 @@
 			<th> 가입일 </th>
 		</tr>
 		
-		<tr th:each="users : ${usersList}"> 
+		<tr> 
 			<td> [[${users.idx}]] </td>
-			<td><a th:href ="@{|/users/detail/${users.idx}|}" >[[${users.cnt}]]</a>  </td>
+			<td><a>[[${users.cnt}]]</a>  </td>
 			<td> [[${users.email}]] </td>
 			<td> [[${users.name}]] </td>	
 			<td> [[${users.pass}]] </td>
 			<td> [[${users.regdate}]] </td>			
 		</tr>
-
 </table>
+<form action = "/users/create" method = "post">
+	<table>
+		<tr>
+			<td>email</td>
+			<td>name</td>
+			<td>pass</td>
+		</tr>
+		<tr>
+			<td><input type="text" name="email"></td>
+			<td><input type="text" name="name"></td>
+			<td><input type="password" name="pass"></td>
+		</tr>
+		<tr>
+			<td><input type="submit" value="주성이 바보"></td>
+		</tr>
+	
+	</table>
+</form>
+
 </body>
 </html>

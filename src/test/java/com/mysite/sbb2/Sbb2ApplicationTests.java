@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.mysite.sbb2.Users.Users;
+import com.mysite.sbb2.Users.UsersRepository;
+
 @SpringBootTest
 @ContextConfiguration(classes = Sbb2Application.class)
 public class Sbb2ApplicationTests {
@@ -16,11 +19,33 @@ public class Sbb2ApplicationTests {
 	@Autowired
 	private UsersRepository usersRepository;
 	
+	@Test
+	public void insert1000() {
+		
+		Users us = null;
+		
+		for (int i = 1; i <=1000 ; i++) 
+		{
+			us = new Users();
+			us.setName("이름 - " + (i));
+			us.setPass("pass1");
+			us.setEmail("메일주소 - " + (i));
+			us.setRegdate(LocalDateTime.now());
+			us.setCnt(i);
+			
+			this.usersRepository.save(us);
+		}
+		
+	}
+	
+	
+	
+	
 	//idx4번 name 주소를 수정
 	//idx3번 값 삭제
 	//regdate컬럼을 기준으로 내림차순 (Desc)
 	
-	
+	/*
 	@Test
 	public void desc() {
 		// select * from Users 
@@ -36,6 +61,7 @@ public class Sbb2ApplicationTests {
 		}
 		
 	}
+	*/
 	
 	
 	
