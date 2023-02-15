@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<h1>UsersTable 출력</h1>
-<hr>
+<html layout:decorate="~{layout}">
+	
+<div layout:fragment="content" class = "container my-3">
+<table class = "table">
+		<thead class = "table-dark"> <!--  제목을 처리 -->
 
 
-<table>
+
 		<tr>
 			<th> 순서 </th>
 			<th> 씨엔티 </th>
@@ -18,6 +14,7 @@
 			<th> pass </th>
 			<th> 가입일 </th>
 		</tr>
+		</thead>
 		
 		<tr> 
 			<td> [[${users.idx}]] </td>
@@ -27,24 +24,9 @@
 			<td> [[${users.pass}]] </td>
 			<td> [[${users.regdate}]] </td>			
 		</tr>
+		
 </table>
-<form action = "/users/create" method = "post">
-	<table>
-		<tr>
-			<td>email</td>
-			<td>name</td>
-			<td>pass</td>
-		</tr>
-		<tr>
-			<td><input type="text" name="email"></td>
-			<td><input type="text" name="name"></td>
-			<td><input type="password" name="pass"></td>
-		</tr>
-		<tr>
-			<td><input type="submit" value="주성이 바보"></td>
-		</tr>
-	
-	</table>
+
 </form>
 
 </body>

@@ -2,13 +2,18 @@ package com.mysite.sbb2.Users;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor //final 필드의 생성자를 자동으로 만든다.
@@ -29,23 +34,39 @@ public class UsersController {
 	private final UsersService usersService;
 	private final UsersRepository usersRepository;
 	
-	@GetMapping("/users/list")
-	@PostMapping("/users/list")
-	public String list(Model model) {
+//	@GetMapping("/users/list")
+//	@PostMapping("/users/list")
+//	public String list(Model model) {
 		
 		//1. 클라이언트 요청 정보 http://localhost:9123/users/list
 		
 		//2. 비즈니스 로직 처리
-		List<Users> usersList =
-				this.usersRepository.findAll();
+//		List<Users> usersList =
+//				this.usersRepository.findAll();
 		
 		//3. 뷰 (view) 페이지로 전송
 			//Model : 뷰페이지로 서버의 데이터를 담아서 전송 객체 
-		model.addAttribute("usersList",usersList);
+//		model.addAttribute("usersList",usersList);
 		//model이라는 객체를 만들고 userList를 "userList"에 담아서 전송
 		//model객체는 usersList를 가지고 있는 거야~
-		return "Users_list";
+//		return "Users_list";
+//	}
+	
+	@GetMapping("users/list")
+	public String list(Model model, @RequestParam (value="page", defaultValue="0") int page) {
+	
+	//비즈니스 로직 처리 :
+	Page<Users> paging =
+		this.usersService.getList(page);
+	
+		//model 객체에 결과로 받은 paging 객체를 client로 전송
+		model.addAttribute("paging", paging);
+		
+		return "users_list";
+		
 	}
+	
+	
 	@GetMapping(value = "/users/detail/{idx}")
 	public String detail(Model model, @PathVariable("idx") Integer idx) {
 		
@@ -57,14 +78,42 @@ public class UsersController {
 		return "Users_detail";
 	}
 	
+	@GetMapping("/users/create")
+	public String create(UsersForm usersform) {
+		return "User_insert";
+	}
+	
+	
 	@PostMapping("/users/create")
-	public String create(@RequestParam("email") String email,@RequestParam("name") String name, @RequestParam("pass") String pass)
-	{
-		 
-				this.usersService.CreateUser(email, name, pass);
+	public String create(
+			//@RequestParam("email") String email,@RequestParam("name") String name, @RequestParam("pass") String pass)
+			@Valid UsersForm usersForm, BindingResult bindingResult)
+			{
+				if(bindingResult.hasErrors()) {
+					return "User_insert";
+				}
+				//로직 작성부분 Service에서 로직을 만들어서 작동
+				//this.usersService.CreateUser(email, name, pass);
 		
+				this.usersService.CreateUser(usersForm.getEmail(), usersForm.getName(), usersForm.getPass());
+				
 		return String.format("redirect:/users/list");
 	}
+	
+	
+	
+	@GetMapping("/user/insert")
+	public String userInsert() {
+		return "User_insert";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
